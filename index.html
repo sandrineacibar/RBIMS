@@ -7,7 +7,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <link rel="stylesheet" href="style.css">
-</head>
 <body>
 
 <!-- ══════════ SIDEBAR ══════════ -->
@@ -138,22 +137,7 @@
 
     <!-- ── RECORDS ── -->
     <div id="page-records" class="page">
-      <div class="search-bar">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--muted)" style="flex-shrink:0"><path d="M11.742 10.344a6.5 6.5 0 10-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 001.415-1.414l-3.85-3.85a1.007 1.007 0 00-.115-.099zM12 6.5a5.5 5.5 0 11-11 0 5.5 5.5 0 0111 0z"/></svg>
-        <input id="search-input" placeholder="Search by name, purok, household ID…" oninput="onSearchInput()">
-        <button class="search-clear" id="search-clear-btn" onclick="clearSearch()" title="Clear search">✕</button>
-<select id="filter-barangay" onchange="renderRecords()" style="width:160px">
-          <option value="">All Puroks</option>
-          <option>ALMASIGA</option>
-          <option>APITONG</option>
-          <option>LAWAAN A</option>
-          <option>LAWAAN B</option>
-          <option>MOLAVE</option>
-          <option>NARRA</option>
-          <option>TANGUILE</option>
-          <option>YAKAL</option>
-        </select>
-      </div>
+      <!-- search-bar removed; use global topbar search instead -->
       <!-- Bulk top bar (shows when ≥1 selected) -->
       <div id="bulk-top-bar" style="display:none;align-items:center;gap:10px;margin-bottom:10px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:8px 14px;box-shadow:0 1px 4px rgba(0,0,0,.06)">
         <button onclick="exitBulkMode()" style="background:none;border:1px solid var(--border);border-radius:6px;width:28px;height:28px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--muted)">✕</button>
