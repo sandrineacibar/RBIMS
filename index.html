@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RBIMS – Barangay Pangabugan, Butuan City</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ══════════ SIDEBAR ══════════ -->
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+<nav class="sidebar">
+  <div class="sidebar-brand" style="padding:14px 16px 12px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <img src="data:image/png;base64,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" alt="Barangay Pangabugan Seal" style="width:42px;height:42px;border-radius:50%;flex-shrink:0;object-fit:cover;border:2px solid var(--gold);box-shadow:0 0 0 2px rgba(200,168,75,.25)">
+        <div>
+          <div class="brand-title" style="font-size:13px;line-height:1.15">RBIMS</div>
+          <div class="brand-sub" style="font-size:9px;letter-spacing:.5px">Barangay Pangabugan</div>
+        </div>
+      </div>
+      <button id="sidebar-close-btn" onclick="toggleSidebar()" style="display:none;background:none;border:none;cursor:pointer;color:rgba(255,255,255,.6);padding:4px;line-height:1;flex-shrink:0" title="Close sidebar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="brand-sub2" style="font-size:9px;line-height:1.3;border-top:1px solid rgba(200,168,75,.2);padding-top:7px;color:rgba(255,255,255,.45)">Registry of Barangay Inhabitants Management System</div>
+  </div>
+
+  <div class="sidebar-nav">
+    <div class="nav-section">Main</div>
+    <div class="nav-item active" data-page="dashboard" onclick="showPage('dashboard',this)">
+      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 2h5v5H2V2zm7 0h5v5H9V2zM2 9h5v5H2V9zm7 0h5v5H9V9z"/></svg>
+      Dashboard
+    </div>
+
+    <div class="nav-section">Households</div>
+    <!-- Dropdown parent -->
+    <div class="nav-item nav-dropdown-toggle" onclick="toggleHHDropdown(this)">
+      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M3 2h10a1 1 0 011 1v10a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1zm1 3v1h8V5H4zm0 3v1h8V8H4zm0 3v1h5v-1H4z"/></svg>
+      Household Records
+      <span class="nav-badge" id="records-badge">0</span>
+      <svg class="dropdown-arrow" viewBox="0 0 16 16" fill="currentColor" style="margin-left:auto;width:12px;height:12px;transition:.2s;flex-shrink:0"><path d="M4 6l4 4 4-4"/></svg>
+    </div>
+    <div class="nav-dropdown" id="hh-dropdown">
+      <div class="nav-sub-item" data-page="records" id="nav-all-puroks" onclick="filterByPurok('');setActiveSubItem(this)">
+        <svg viewBox="0 0 16 16" fill="currentColor"><path d="M3 2h10a1 1 0 011 1v10a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1zm1 3v1h8V5H4zm0 3v1h8V8H4zm0 3v1h5v-1H4z"/></svg>
+        All Purok
+        <span class="nav-year-count" id="nav-all-puroks-count">0</span>
+      </div>
+      <div id="nav-purok-items"></div>
+      <div class="nav-sub-divider"></div>
+      <div class="nav-sub-item" onclick="openAddModal();setActiveSubItem(this)">
+        <svg viewBox="0 0 16 16" fill="currentColor"><path d="M7 1v6H1v2h6v6h2V9h6V7H9V1z"/></svg>
+        Add Household
+      </div>
+    </div>
+    <input type="file" id="excel-import-input" accept=".xlsx,.xls" style="display:none" onchange="importExcelFile(this)">
+    <!-- Import Excel as standalone nav item below the dropdown -->
+    <div class="nav-item" onclick="triggerImportExcel()">
+      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 14h12v-1H2v1zm6-2l4-4-1-1-3 3V2H8v8L5 7l-1 1 4 4z"/></svg>
+      Import Excel
+    </div>
+
+    <div class="nav-section">Reports</div>
+    <div class="nav-item" data-page="report" onclick="showPage('report',this);renderReport()">
+      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M4 1h8l3 3v10a1 1 0 01-1 1H2a1 1 0 01-1-1V2a1 1 0 011-1h2zm0 7v1h8V8H4zm0 3v1h6v-1H4zm4-9H4V4h4V2z"/></svg>
+      Summary Report
+    </div>
+  </div>
+
+  <div class="sidebar-footer">
+    <div style="font-size:10px;font-weight:600;color:rgba(255,255,255,.5)">RBI Form A &amp; C · 2026</div>
+    <div style="margin-top:2px;opacity:.5;font-size:10px">Brgy. Pangabugan · Butuan City</div>
+    <div style="margin-top:1px;opacity:.35;font-size:9px">Agusan del Norte · Region XIII</div>
+  </div>
+</nav>
+
+<!-- ══════════ MAIN AREA ══════════ -->
+<div class="main-area">
+  <div class="topbar"><button class="hamburger-btn" onclick="toggleSidebar()" style="display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--navy);flex-shrink:0;position:relative;z-index:300"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+    <div>
+      <span class="topbar-title" id="topbar-title">Dashboard</span>
+      <span class="topbar-sub" id="topbar-sub">Overview of registered inhabitants</span>
+    </div>
+    <div class="topbar-right">
+      <!-- Global Search -->
+      <div class="global-search-wrap" id="global-search-wrap">
+        <div class="global-search-input-row">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="var(--muted)"><path d="M11.742 10.344a6.5 6.5 0 10-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 001.415-1.414l-3.85-3.85a1.007 1.007 0 00-.115-.099zM12 6.5a5.5 5.5 0 11-11 0 5.5 5.5 0 0111 0z"/></svg>
+          <input id="global-search-input" placeholder="Search members, household, purok…" autocomplete="off"
+            oninput="onGlobalSearch(this.value)"
+            onkeydown="onGlobalSearchKey(event)"
+            onfocus="onGlobalSearch(this.value)">
+          <button class="global-search-clear" id="global-search-clear" onclick="clearGlobalSearch()" title="Clear">✕</button>
+        </div>
+        <div class="global-search-results" id="global-search-results"></div>
+      </div>
+      <div id="topbar-actions"></div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ── DASHBOARD ── -->
+    <div id="page-dashboard" class="page active">
+      <div class="stats-grid" id="stats-grid"></div>
+      <div style="margin-bottom:16px">
+        <div style="font-size:12px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.7px;margin-bottom:10px;display:flex;align-items:center;gap:6px">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="var(--gold)"><path d="M8 1a5 5 0 100 10A5 5 0 008 1zm0 1.5a3.5 3.5 0 110 7 3.5 3.5 0 010-7zM3 13.5c0-1.4 2.2-2.5 5-2.5s5 1.1 5 2.5H3z"/></svg>
+          Population by Purok <span style="font-size:10px;font-weight:400;color:var(--muted);margin-left:4px">(click a purok to view its households)</span>
+        </div>
+        <div class="stats-grid" id="purok-stats-grid" style="grid-template-columns:repeat(4,1fr)"></div>
+      </div>
+      <div class="dashboard-charts" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:stretch">
+        <div class="card" style="display:flex;flex-direction:column">
+          <div class="card-title">
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a4 4 0 100 8A4 4 0 008 1zM3 13c0-2.2 2.2-4 5-4s5 1.8 5 4v1H3v-1z"/></svg>
+            Population by Sex
+          </div>
+          <div id="sex-chart"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M1 3h14v2H1V3zm2 4h10v2H3V7zm2 4h6v2H5v-2z"/></svg>
+            Sector Summary
+          </div>
+          <div id="sector-chart"></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:16px">
+        <div class="card-title">Recent Households</div>
+        <div id="recent-households"></div>
+      </div>
+    </div>
+
+    <!-- ── RECORDS ── -->
+    <div id="page-records" class="page">
+      <div class="search-bar">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--muted)" style="flex-shrink:0"><path d="M11.742 10.344a6.5 6.5 0 10-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 001.415-1.414l-3.85-3.85a1.007 1.007 0 00-.115-.099zM12 6.5a5.5 5.5 0 11-11 0 5.5 5.5 0 0111 0z"/></svg>
+        <input id="search-input" placeholder="Search by name, purok, household ID…" oninput="onSearchInput()">
+        <button class="search-clear" id="search-clear-btn" onclick="clearSearch()" title="Clear search">✕</button>
+<select id="filter-barangay" onchange="renderRecords()" style="width:160px">
+          <option value="">All Puroks</option>
+          <option>ALMASIGA</option>
+          <option>APITONG</option>
+          <option>LAWAAN A</option>
+          <option>LAWAAN B</option>
+          <option>MOLAVE</option>
+          <option>NARRA</option>
+          <option>TANGUILE</option>
+          <option>YAKAL</option>
+        </select>
+      </div>
+      <!-- Bulk top bar (shows when ≥1 selected) -->
+      <div id="bulk-top-bar" style="display:none;align-items:center;gap:10px;margin-bottom:10px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:8px 14px;box-shadow:0 1px 4px rgba(0,0,0,.06)">
+        <button onclick="exitBulkMode()" style="background:none;border:1px solid var(--border);border-radius:6px;width:28px;height:28px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--muted)">✕</button>
+        <span id="selected-count" style="font-size:13px;font-weight:600;color:var(--navy)">0 selected</span>
+        <button onclick="deleteSelected()" style="background:none;border:none;cursor:pointer;padding:4px 8px;border-radius:6px;color:var(--red);display:flex;align-items:center;gap:5px;font-size:13px;font-weight:600" title="Delete selected">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 6h18v2H3V6zm2 3h14l-1.5 12H6.5L5 9zm5-6h4v2h-4V3z"/></svg>
+        </button>
+      </div>
+      <!-- Bulk mode toggle row -->
+      <div id="bulk-mode-row" style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <label id="bulk-select-all-wrap" style="display:none;align-items:center;gap:6px;cursor:pointer;font-size:12px;font-weight:600;color:var(--navy);background:#fff;border:1px solid var(--border);border-radius:6px;padding:5px 10px">
+          <input type="checkbox" id="select-all-cb" onchange="toggleSelectAll(this.checked)" style="width:15px;height:15px;accent-color:var(--navy)">
+          Select All
+        </label>
+        <button class="btn btn-outline btn-sm" id="bulk-toggle-btn" onclick="enterBulkMode()" style="font-size:12px">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M2 3a1 1 0 011-1h10a1 1 0 011 1v1H2V3zm0 3h12v8a1 1 0 01-1 1H3a1 1 0 01-1-1V6zm4 2v4h1V8H6zm3 0v4h1V8H9z"/></svg>
+          Select to Delete
+        </button>
+      </div>
+      <div id="year-filter-banner" style="display:none;align-items:center;gap:8px;margin-bottom:10px;background:#fef3c7;border:1px solid var(--gold);border-radius:8px;padding:8px 14px">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="var(--golddk)"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 1.5a5.5 5.5 0 110 11 5.5 5.5 0 010-11zM7 6h2v5H7zm0-2h2v1.5H7z"/></svg>
+        <span id="year-filter-label" style="font-size:12.5px;font-weight:600;color:var(--golddk)"></span>
+        <button onclick="filterByPurok('');setActiveSubItem(document.getElementById('nav-all-puroks'))" style="margin-left:auto;background:none;border:1px solid var(--golddk);border-radius:5px;padding:2px 8px;font-size:11px;font-weight:600;color:var(--golddk);cursor:pointer">✕ Clear Filter</button>
+      </div>
+      <div id="records-list"></div>
+    </div>
+
+    <!-- ── PUROK DETAIL ── -->
+    <div id="page-purok" class="page">
+      <div id="purok-body"></div>
+    </div>
+
+    <!-- ── REPORT ── -->
+    <div id="page-report" class="page">
+      <div class="no-print" style="display:flex;align-items:center;gap:12px;padding:10px 0 14px;flex-wrap:wrap">
+        <span style="font-size:13px;font-weight:600;color:var(--navy)">Semester:</span>
+        <select id="rpt-semester" onchange="renderReport()" style="border:1px solid var(--border);border-radius:6px;padding:6px 10px;font-size:13px;color:var(--text);background:#fff;outline:none">
+          <option>1st Semester</option><option>2nd Semester</option>
+        </select>
+        <span style="font-size:13px;font-weight:600;color:var(--navy)">CY:</span>
+        <input id="rpt-year" value="2025" onchange="renderReport()" oninput="renderReport()" style="border:1px solid var(--border);border-radius:6px;padding:6px 10px;width:80px;text-align:center;font-size:13px;color:var(--text);background:#fff;outline:none">
+      </div>
+      <div class="report-body" id="report-body"></div>
+    </div>
+
+    <!-- ── HOUSEHOLD DETAIL ── -->
+    <div id="page-detail" class="page">
+      <div id="detail-body"></div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main-area -->
+
+<!-- ── ADD HOUSEHOLD MODAL ── -->
+<div class="modal-overlay" id="add-hh-modal">
+  <div class="modal" style="max-width:1100px">
+    <div class="modal-header">
+      <h3 id="add-modal-title" style="font-size:16px;color:var(--navy)">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:-2px;margin-right:6px"><path d="M8 2a6 6 0 100 12A6 6 0 008 2zm1 5V5H7v2H5v2h2v2h2V9h2V7H9z"/></svg>
+        Add Household – RBI Form A
+      </h3>
+      <button class="modal-close" onclick="closeAddModal()">✕</button>
+    </div>
+    <div id="add-modal-body">
+      <div class="card" style="margin-bottom:14px;border:none;padding:0">
+        <div class="card-title">📍 Location Information</div>
+        <div class="form-grid four">
+          <div class="form-group">
+            <label>Purok</label>
+            <select id="f-address" onchange="onPurokChange()">
+              <option value="">— Select Purok —</option>
+              <option>ALMASIGA</option>
+              <option>APITONG</option>
+              <option>LAWAAN A</option>
+              <option>LAWAAN B</option>
+              <option>MOLAVE</option>
+              <option>NARRA</option>
+              <option>TANGUILE</option>
+              <option>YAKAL</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Household No.</label><input id="f-hno" placeholder="Household number"/></div>
+          <div class="form-group"><label>Household ID (Auto)</label><input id="f-hid" readonly/></div>
+        </div>
+        <input type="hidden" id="f-region" value="XIII">
+        <input type="hidden" id="f-province" value="Agusan del Norte">
+        <input type="hidden" id="f-city" value="Butuan City">
+        <input type="hidden" id="f-barangay" value="Pangabugan">
+      </div>
+
+      <div style="border:1px solid var(--border);border-radius:8px;padding:16px;margin-top:4px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border)">
+          <span style="font-size:14px;font-weight:600;color:var(--navy)">👨‍👩‍👧‍👦 Household Members <span style="font-size:11px;font-weight:400;color:var(--muted)">(Card 1 = Household Head)</span></span>
+          <button class="btn btn-outline btn-sm" onclick="addMemberRow()">+ Add Member</button>
+        </div>
+        <div class="member-cards" id="members-tbody"></div>
+        <div style="margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-top:12px;border-top:1px solid var(--border)">
+          <span style="font-size:12px;color:var(--muted)">Members: <strong id="member-count">0</strong></span>
+          <div style="margin-left:auto" class="btn-group">
+            <button class="btn btn-outline" onclick="clearForm()">🗑 Clear</button>
+            <button class="btn btn-primary" onclick="saveHousehold()">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M2 2h9l3 3v9H2V2zm5 9a2 2 0 100-4 2 2 0 000 4zm4-9H5v3h6V2z"/></svg>
+              Save Household
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── MODAL ── -->
+<div class="modal-overlay" id="hh-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-title" style="font-size:16px;color:var(--navy)">Household Details</h3>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="btn btn-excel btn-sm" id="modal-excel-btn" onclick="">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM8.5 15l1.5-2.5L8.5 10H10l.75 1.5.75-1.5h1.5l-1.5 2.5 1.5 2.5H11.5L10.75 13 10 15H8.5z"/></svg>
+          Export Excel
+        </button>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+    </div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<!-- ── SINGLE MEMBER EDIT MODAL ── -->
+<div class="modal-overlay" id="member-edit-modal">
+  <div class="modal" style="max-width:960px">
+    <div class="modal-header">
+      <h3 id="member-edit-title" style="font-size:16px;color:var(--navy)">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:-2px;margin-right:6px"><path d="M11.7 2.3a1 1 0 011.4 1.4L4.4 12.4l-2.1.6.6-2.1 8.8-8.6z"/></svg>
+        Edit Member
+      </h3>
+      <button class="modal-close" onclick="closeMemberEditModal()">✕</button>
+    </div>
+    <div id="member-edit-body" style="padding:4px 0"></div>
+    <div style="display:flex;justify-content:flex-end;gap:10px;padding-top:14px;border-top:1px solid var(--border);margin-top:4px">
+      <button class="btn btn-outline" onclick="closeMemberEditModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveMemberEdit()">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M2 2h9l3 3v9H2V2zm5 9a2 2 0 100-4 2 2 0 000 4zm4-9H5v3h6V2z"/></svg>
+        Save Changes
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ── PUROK PICKER MODAL (for Excel import) ── -->
+<div class="modal-overlay" id="purok-modal">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-header">
+      <h3 style="font-size:16px;color:var(--navy)">📂 Import Excel</h3>
+    </div>
+    <div style="padding:4px 0 16px">
+      <p style="font-size:13px;color:var(--muted);margin-bottom:14px">Ang Excel file naay <strong id="purok-sheet-count">0</strong> sheet(s). Pilion ang Purok para sa imported households:</p>
+      <div class="form-group">
+        <label>Purok / Address</label>
+        <select id="purok-picker" style="border:1px solid var(--border);border-radius:6px;padding:8px 11px;font-size:13px;width:100%">
+          <option value="ALMASIGA">ALMASIGA</option>
+          <option value="APITONG">APITONG</option>
+          <option value="LAWAAN A">LAWAAN A</option>
+          <option value="LAWAAN B">LAWAAN B</option>
+          <option value="MOLAVE">MOLAVE</option>
+          <option value="NARRA">NARRA</option>
+          <option value="TANGUILE">TANGUILE</option>
+          <option value="YAKAL">YAKAL</option>
+        </select>
+      </div>
+    </div>
+    <div class="btn-group" style="justify-content:flex-end">
+      <button class="btn btn-outline" onclick="closePurokModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmImport()">Import</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── DECEASED MODAL ── -->
+<div class="modal-overlay" id="deceased-modal">
+  <div class="modal" style="max-width:480px">
+    <div class="modal-header">
+      <h3 style="font-size:16px;color:var(--red)">🕊 Mark as Deceased</h3>
+      <button class="modal-close" onclick="closeDeceasedModal()">✕</button>
+    </div>
+    <div id="deceased-modal-body" style="padding:4px 0 16px">
+      <div id="deceased-member-name" style="font-size:15px;font-weight:700;color:var(--navy);margin-bottom:14px;padding:10px 14px;background:#fef2f2;border-radius:8px;border-left:4px solid var(--red)"></div>
+
+      <!-- Date of Death -->
+      <div class="form-group" style="margin-bottom:14px">
+        <label>Date of Death</label>
+        <input type="date" id="deceased-dod" style="width:100%">
+      </div>
+
+      <!-- New head selection (only shown if head is deceased) -->
+      <div id="new-head-section" style="display:none;margin-bottom:14px">
+        <div style="background:#fff8e1;border:1px solid var(--gold);border-radius:8px;padding:12px 14px;margin-bottom:12px">
+          <div style="font-size:12px;font-weight:700;color:#92400e;margin-bottom:6px">⚠️ The Household Head is deceased</div>
+          <div style="font-size:12px;color:#92400e">A new head is required for this household. Please select who will be the new head:</div>
+        </div>
+        <div class="form-group">
+          <label>New Household Head</label>
+          <select id="new-head-select" style="width:100%;border:1px solid var(--border);border-radius:6px;padding:8px 11px;font-size:13px"></select>
+        </div>
+      </div>
+
+      <!-- Action choice -->
+      <div style="background:#f0f3fa;border-radius:8px;padding:14px;margin-bottom:6px">
+        <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:10px">What to do with this record?</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:13px;text-transform:none;letter-spacing:0;color:var(--text);font-weight:400">
+            <input type="radio" name="deceased-action" value="remove" checked style="margin-top:2px;accent-color:var(--red)">
+            <span><strong>Remove from household</strong> – Delete this member's record from the household list</span>
+          </label>
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:13px;text-transform:none;letter-spacing:0;color:var(--text);font-weight:400">
+            <input type="radio" name="deceased-action" value="keep" style="margin-top:2px;accent-color:var(--navy)">
+            <span><strong>Keep but mark as deceased</strong> – Add a "Deceased" badge to the record without deleting it</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="btn-group" style="justify-content:flex-end">
+      <button class="btn btn-outline" onclick="closeDeceasedModal()">Cancel</button>
+      <button class="btn btn-danger" onclick="confirmDeceased()" style="background:var(--red);color:#fff;border:none">
+        🕊 Confirm Deceased
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="script.js"></script>
+
+<!-- ── DELETE CONFIRM MODAL ── -->
+<div class="modal-overlay" id="delete-confirm-modal" style="z-index:400">
+  <div class="modal" style="max-width:400px;border-radius:14px;overflow:hidden;padding:0">
+    <div style="background:var(--red);padding:18px 22px;display:flex;align-items:center;gap:12px">
+      <div style="width:36px;height:36px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+      </div>
+      <div>
+        <div id="delete-modal-title" style="font-size:15px;font-weight:700;color:#fff;font-family:'Source Serif 4',serif">Delete Member</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.75);margin-top:1px">This action cannot be undone</div>
+      </div>
+    </div>
+    <div style="padding:22px 24px">
+      <div id="delete-confirm-name" style="font-size:14px;font-weight:700;color:var(--navy);background:var(--light);border-radius:8px;padding:10px 14px;margin-bottom:14px;border-left:4px solid var(--red)"></div>
+      <p id="delete-modal-desc" style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:20px">Are you sure you want to delete this member from the household?</p>
+      <div style="display:flex;gap:10px;justify-content:flex-end">
+        <button class="btn btn-outline" onclick="closeDeleteModal()" style="min-width:90px">Cancel</button>
+        <button class="btn" id="delete-confirm-btn" onclick="executeDelete()" style="background:var(--red);color:#fff;border:none;min-width:110px;gap:6px">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+          Yes, Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── BULK DELETE CONFIRM MODAL ── -->
+<div class="modal-overlay" id="bulk-delete-confirm-modal" style="z-index:400">
+  <div class="modal" style="max-width:400px;border-radius:14px;overflow:hidden;padding:0">
+    <div style="background:var(--red);padding:18px 22px;display:flex;align-items:center;gap:12px">
+      <div style="width:36px;height:36px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+      </div>
+      <div>
+        <div style="font-size:15px;font-weight:700;color:#fff;font-family:'Source Serif 4',serif">Delete Selected</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.75);margin-top:1px">This action cannot be undone</div>
+      </div>
+    </div>
+    <div style="padding:22px 24px">
+      <div id="bulk-delete-count-label" style="font-size:14px;font-weight:700;color:var(--navy);background:var(--light);border-radius:8px;padding:10px 14px;margin-bottom:14px;border-left:4px solid var(--red)"></div>
+      <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:20px">Are you sure you want to delete all selected household records? All member data will be permanently removed.</p>
+      <div style="display:flex;gap:10px;justify-content:flex-end">
+        <button class="btn btn-outline" onclick="closeBulkDeleteModal()" style="min-width:90px">Cancel</button>
+        <button class="btn" onclick="executeBulkDelete()" style="background:var(--red);color:#fff;border:none;min-width:110px;gap:6px">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+          Yes, Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
